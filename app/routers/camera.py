@@ -1,3 +1,4 @@
+import logging
 from io import BytesIO
 
 from fastapi import APIRouter
@@ -18,7 +19,9 @@ async def health():
 @router.get('/image/capture', response_model=Image)
 # implements http rest api call to capture rpi image
 async def capture():
-    return Image(data=_capture())
+    data = _capture()
+    logging.warning(data)
+    return Image(data=data)
 
 
 @router.get('/image/preview')
