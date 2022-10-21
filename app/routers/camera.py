@@ -1,8 +1,11 @@
+from io import BytesIO
+
 from fastapi import APIRouter
 from fastapi import Response
 
 from app.models.health import Health
 from app.models.image import Image
+from app.utils.camera import setup
 
 router = APIRouter(prefix='/camera')
 
@@ -20,4 +23,8 @@ async def capture():
 
 @router.get('/image/preview')
 async def preview():
-    return Response(content=b'asd', media_type='image/png')
+    my_stream = BytesIO()
+    camera = setup()
+
+    camera.capture(my_stream, 'png')
+    return Response(content=my_stream.read(), media_type='image/png')

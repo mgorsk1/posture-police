@@ -1,7 +1,6 @@
 import time
 
 from picamera import PiCamera
-# from picamera.array import PiRGBArray
 
 
 def setup():
@@ -13,4 +12,5 @@ def setup():
     camera = PiCamera()
     camera.resolution = ('600', '400')
     camera.framerate = int('24')
-    # raw_capture = PiRGBArray(camera, size=camera.resolution)
+
+    return camera
