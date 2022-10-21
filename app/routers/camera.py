@@ -28,4 +28,5 @@ async def preview():
     logging.warning('capturing')
     camera.capture(my_stream, 'png')
     logging.warning('captured')
+    my_stream.seek(0)
     return Response(content=my_stream.read(), media_type='image/png')
