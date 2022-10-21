@@ -20,4 +20,4 @@ async def check_posture(kind: Kinds):
 
     prediction = await model(image)
 
-    return PostureCheck(image=image.data, prediction=prediction, kind=kind)
+    return PostureCheck(image=image.data, prediction=prediction, kind=kind.value)
