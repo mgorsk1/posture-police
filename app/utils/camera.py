@@ -10,7 +10,10 @@ def setup():
     time.sleep(1)
 
     camera = PiCamera()
-    camera.resolution = ('600', '400')
-    camera.framerate = int('24')
+    camera.resolution = (600, 400)
+    camera.framerate = int('1')
 
     return camera
+
+
+camera = setup()
