@@ -17,7 +17,7 @@ async def health():
     return Health(status='ok')
 
 
-@router.post('/predict', response_model=PredictionResult)
+@router.post('/legs/predict', response_model=PredictionResult)
 # implements http rest api call to tensorflow model responsible for establishing whether posture is ok or not
 async def query_model(data: Image):
     # image = data.data
