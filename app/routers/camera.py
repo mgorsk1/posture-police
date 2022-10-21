@@ -1,14 +1,10 @@
 from fastapi import APIRouter
 from fastapi import Response
-from pydantic import BaseModel
 
-from app.routers import Health
+from app.models.health import Health
+from app.models.image import Image
 
 router = APIRouter(prefix='/camera')
-
-
-class Image(BaseModel):
-    data: bytes
 
 
 @router.get('/', response_model=Health)

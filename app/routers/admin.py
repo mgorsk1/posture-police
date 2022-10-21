@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.routers import Health
+from app.models.health import Health
 
 router = APIRouter(prefix='/admin')
 

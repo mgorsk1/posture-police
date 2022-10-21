@@ -1,25 +1,23 @@
 from fastapi import APIRouter
 from fastapi import status
-from pydantic import BaseModel
 
+from app.models.posture_check import PostureCheck
 from app.routers.camera import capture
-from app.routers.model import PredictionResult
-from app.routers.model import query_model
-from app.utils.constanst import KIND_LEGS
+from app.routers.model.legs import query_legs_model
+from app.utils.constanst import Kinds
 
 router = APIRouter(prefix='/posture')
 
 
-class PostureCheck(BaseModel):
-    image: bytes
-    prediction: PredictionResult
-    kind: str
-
-
-@router.get('/legs/check', response_model=PostureCheck, status_code=status.HTTP_202_ACCEPTED)
+@router.get('/check/{kind}', response_model=PostureCheck, status_code=status.HTTP_202_ACCEPTED)
 # captures photo and sends it to model to get prediction
-async def check_legs():
+async def check_posture(kind: Kinds):
     image = await capture()
-    prediction = await query_model(image)
+    if kind == Kinds.LEGS:
+        model = query_legs_model
+    else:
+        raise NotImplementedError('kind: {} is not implemented.')
 
-    return PostureCheck(image=image.data, prediction=prediction, kind=KIND_LEGS)
+    prediction = await model(image)
+
+    return PostureCheck(image=image.data, prediction=prediction, kind=kind)
